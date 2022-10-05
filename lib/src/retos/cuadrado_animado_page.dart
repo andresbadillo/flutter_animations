@@ -1,76 +1,84 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as Math;
 
-class AnimacionesPage extends StatelessWidget {
-  const AnimacionesPage({Key? key}) : super(key: key);
+class CuadradoAnimadoPage extends StatelessWidget {
+  const CuadradoAnimadoPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: CuadradoAnimado(),
-      ),
+      body: Center(child: _CuadradoAnimado()),
     );
   }
 }
 
-class CuadradoAnimado extends StatefulWidget {
-  const CuadradoAnimado({
+class _CuadradoAnimado extends StatefulWidget {
+  const _CuadradoAnimado({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<CuadradoAnimado> createState() => _CuadradoAnimadoState();
+  State<_CuadradoAnimado> createState() => _CuadradoAnimadoState();
 }
 
-class _CuadradoAnimadoState extends State<CuadradoAnimado>
+class _CuadradoAnimadoState extends State<_CuadradoAnimado>
     with SingleTickerProviderStateMixin {
   AnimationController? controller;
-  Animation<double>? rotacion;
-  Animation<double>? opacidad;
-  Animation<double>? opacidadOut;
+  // Animaciones
   Animation<double>? moverDerecha;
-  Animation<double>? agrandar;
+  Animation<double>? moverArriba;
+  Animation<double>? moverIzquierda;
+  Animation<double>? moverAbajo;
 
   @override
   void initState() {
+    // Inicializar todo
     controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 4000),
+      duration: const Duration(milliseconds: 4500),
     );
 
-    rotacion = Tween(begin: 0.0, end: 2 * Math.pi).animate(
-      CurvedAnimation(parent: controller!, curve: Curves.easeInOutCubic),
-    );
-
-    opacidad = Tween(begin: 0.1, end: 1.0).animate(
+    moverDerecha = Tween(begin: 0.0, end: 80.0).animate(
       CurvedAnimation(
         parent: controller!,
         curve: const Interval(
-          0,
+          0.0,
           0.25,
-          curve: Curves.easeIn,
+          curve: Curves.bounceOut,
         ),
       ),
     );
 
-    opacidadOut = Tween(begin: 0.0, end: 1.0).animate(
+    moverArriba = Tween(begin: 0.0, end: -80.0).animate(
+      CurvedAnimation(
+        parent: controller!,
+        curve: const Interval(
+          0.25,
+          0.5,
+          curve: Curves.bounceOut,
+        ),
+      ),
+    );
+
+    moverIzquierda = Tween(begin: 0.0, end: -80.0).animate(
+      CurvedAnimation(
+        parent: controller!,
+        curve: const Interval(
+          0.5,
+          0.75,
+          curve: Curves.bounceOut,
+        ),
+      ),
+    );
+
+    moverAbajo = Tween(begin: 0.0, end: 80.0).animate(
       CurvedAnimation(
         parent: controller!,
         curve: const Interval(
           0.75,
           1.0,
-          curve: Curves.easeOut,
+          curve: Curves.bounceOut,
         ),
       ),
-    );
-
-    moverDerecha = Tween(begin: 0.0, end: 100.0).animate(
-      CurvedAnimation(parent: controller!, curve: Curves.easeOut),
-    );
-
-    agrandar = Tween(begin: 0.0, end: 2.0).animate(
-      CurvedAnimation(parent: controller!, curve: Curves.easeOut),
     );
 
     controller!.addListener(() {
@@ -101,21 +109,10 @@ class _CuadradoAnimadoState extends State<CuadradoAnimado>
       animation: controller!,
       child: _Rectangulo(),
       builder: (BuildContext context, Widget? childCuadrado) {
-        // print('Rotación: ' + rotacion!.value.toString());
-        print('status: ${controller!.status}');
-
         return Transform.translate(
-          offset: Offset(moverDerecha!.value, 0),
-          child: Transform.rotate(
-            angle: rotacion!.value,
-            child: Opacity(
-              opacity: opacidad!.value - opacidadOut!.value,
-              child: Transform.scale(
-                scale: agrandar!.value,
-                child: childCuadrado,
-              ),
-            ),
-          ),
+          offset: Offset(moverDerecha!.value + moverIzquierda!.value,
+              moverArriba!.value + moverAbajo!.value),
+          child: childCuadrado,
         );
       },
     );
