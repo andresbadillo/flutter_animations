@@ -15,17 +15,37 @@ class _GraficasCircularesPageState extends State<GraficasCircularesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Container(
-          width: 300,
-          height: 300,
-          child: RadialProgress(
-            porcentaje: porcentaje,
-            colorPrimario: Colors.purple,
-            colorSecundario: Colors.blueGrey,
-            grosorPrimario: 8.0,
-            grosorSecundario: 2.0,
-          ),
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                CustomRadialProgress(
+                  porcentaje: porcentaje,
+                  color: Colors.blue,
+                ),
+                CustomRadialProgress(
+                  porcentaje: porcentaje,
+                  color: Colors.purple,
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                CustomRadialProgress(
+                  porcentaje: porcentaje,
+                  color: Colors.amber,
+                ),
+                CustomRadialProgress(
+                  porcentaje: porcentaje,
+                  color: Colors.pink,
+                ),
+              ],
+            )
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -38,6 +58,33 @@ class _GraficasCircularesPageState extends State<GraficasCircularesPage> {
             }
           });
         },
+      ),
+    );
+  }
+}
+
+class CustomRadialProgress extends StatelessWidget {
+  final Color color;
+
+  const CustomRadialProgress({
+    Key? key,
+    required this.porcentaje,
+    required this.color,
+  }) : super(key: key);
+
+  final double porcentaje;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 180,
+      height: 180,
+      child: RadialProgress(
+        porcentaje: porcentaje,
+        colorPrimario: color,
+        colorSecundario: Colors.blueGrey,
+        grosorPrimario: 8.0,
+        grosorSecundario: 2.0,
       ),
     );
   }
