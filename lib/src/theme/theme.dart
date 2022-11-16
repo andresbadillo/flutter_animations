@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ThemeChanger with ChangeNotifier {
   bool _darkTheme = false;
@@ -44,8 +45,18 @@ class ThemeChanger with ChangeNotifier {
 
     if (value) {
       _currentTheme = ThemeData.dark();
+      SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+        ),
+      );
     } else {
       _currentTheme = ThemeData.light();
+      SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(
+          statusBarColor: Colors.black26,
+        ),
+      );
     }
 
     notifyListeners();
@@ -75,8 +86,18 @@ class ThemeChanger with ChangeNotifier {
           backgroundColor: Color(0xff48A0EB),
         ),
       );
+      SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+        ),
+      );
     } else {
       _currentTheme = ThemeData.light();
+      SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(
+          statusBarColor: Colors.black26,
+        ),
+      );
     }
 
     notifyListeners();

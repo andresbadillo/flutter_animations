@@ -17,19 +17,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appTheme = Provider.of<ThemeChanger>(context);
+
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
       ),
     );
 
-    final currentTheme = Provider.of<ThemeChanger>(context).currentTheme;
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Diseños App',
       home: LauncherPage(),
-      theme: currentTheme,
+      theme: appTheme.currentTheme,
     );
   }
 }
