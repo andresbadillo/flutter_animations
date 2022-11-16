@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class ThemeChanger with ChangeNotifier {
@@ -50,11 +52,29 @@ class ThemeChanger with ChangeNotifier {
   }
 
   set customTheme(bool value) {
-    _darkTheme = false;
     _customTheme = value;
+    _darkTheme = false;
 
     if (value) {
-      _currentTheme = ThemeData.light();
+      _currentTheme = ThemeData.dark().copyWith(
+        accentColor: const Color(0xff48A0EB),
+        primaryColorLight: Colors.white,
+        scaffoldBackgroundColor: const Color(0xff16202B),
+        textTheme: const TextTheme(
+          bodyText1: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xff16202B),
+        ),
+        drawerTheme: const DrawerThemeData(
+          backgroundColor: Color(0xff16202B),
+        ),
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          backgroundColor: Color(0xff48A0EB),
+        ),
+      );
     } else {
       _currentTheme = ThemeData.light();
     }
