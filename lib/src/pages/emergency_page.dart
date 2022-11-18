@@ -20,6 +20,13 @@ class EmergencyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isLarge;
+    if (MediaQuery.of(context).size.height > 500) {
+      isLarge = true;
+    } else {
+      isLarge = false;
+    }
+
     final items = <ItemBoton>[
       ItemBoton(FontAwesomeIcons.carBurst, 'Motor Accident',
           const Color(0xff6989F5), const Color(0xff906EF5)),
@@ -57,7 +64,7 @@ class EmergencyPage extends StatelessWidget {
               color1: item.color1,
               color2: item.color2,
               onPress: () {
-                print('Click!!!');
+                // print('Click!!!');
               },
             ),
           ),
@@ -67,16 +74,20 @@ class EmergencyPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          ListView(
-            physics: const BouncingScrollPhysics(),
-            children: [
-              const SizedBox(
-                height: 270,
-              ),
-              ...itemMap,
-            ],
+          Container(
+            margin: EdgeInsets.only(top: (isLarge) ? 250 : 0),
+            child: ListView(
+              physics: const BouncingScrollPhysics(),
+              children: [
+                if (isLarge)
+                  const SizedBox(
+                    height: 50,
+                  ),
+                ...itemMap,
+              ],
+            ),
           ),
-          _Encabezado(),
+          if (isLarge) const _Encabezado(),
         ],
       ),
     );
@@ -130,7 +141,7 @@ class BotonGordoTemp extends StatelessWidget {
       color1: const Color(0xff6989f5),
       color2: const Color(0xff906ef5),
       onPress: () {
-        print('Click!!');
+        // print('Click!!');
       },
     );
   }
