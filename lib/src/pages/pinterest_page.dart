@@ -18,7 +18,7 @@ class PinterestPage extends StatelessWidget {
         body: Stack(
           alignment: Alignment.center,
           children: const [
-            PinterestGrid(),
+            SafeArea(child: PinterestGrid()),
             _PinterestMenuLocation(),
           ],
         ),
@@ -110,7 +110,7 @@ class _PinterestGridState extends State<PinterestGrid> {
     return SingleChildScrollView(
       controller: controller,
       physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.only(top: 25, left: 6, right: 6),
+      padding: const EdgeInsets.only(top: 6, left: 6, right: 6),
       child: StaggeredGrid.count(
         crossAxisCount: count,
         crossAxisSpacing: 6.0,
