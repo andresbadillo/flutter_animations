@@ -16,6 +16,7 @@ class PinterestPage extends StatelessWidget {
         // body: PinterestMenu(),
         // body: PinterestGrid(),
         body: Stack(
+          alignment: Alignment.center,
           children: const [
             PinterestGrid(),
             _PinterestMenuLocation(),
@@ -97,12 +98,21 @@ class _PinterestGridState extends State<PinterestGrid> {
 
   @override
   Widget build(BuildContext context) {
+    int count;
+    if (MediaQuery.of(context).size.width > 1000) {
+      count = 8;
+    } else if (MediaQuery.of(context).size.width > 500) {
+      count = 6;
+    } else {
+      count = 4;
+    }
+
     return SingleChildScrollView(
       controller: controller,
       physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.only(top: 25, left: 6, right: 6),
       child: StaggeredGrid.count(
-        crossAxisCount: 4,
+        crossAxisCount: count,
         crossAxisSpacing: 6.0,
         mainAxisSpacing: 6.0,
         children: List.generate(
@@ -136,7 +146,7 @@ class _PinterestItem extends StatelessWidget {
         child: Center(
           child: CircleAvatar(
             backgroundColor: Colors.white,
-            child: Text('$i'),
+            child: Text('${i + 1}'),
           ),
         ),
       ),
